@@ -3,6 +3,12 @@
     "name": "test-rn-app",
     "slug": "test-rn-app",
     "version": "1.0.0",
+    "owner": "xcodein",
+    "extra": {
+      "eas": {
+        "projectId": "6d0c5679-ec14-4a21-b2ff-a3699aca44e2"
+      }
+    },
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
