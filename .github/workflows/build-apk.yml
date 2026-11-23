@@ -1,0 +1,65 @@
+name: Build APK
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build APK with EAS
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          npm install -g eas-cli
+          eas build --platform android --non-interactive --wait
+
+      - name: Download APK
+        run: |
+          mkdir -p ./apk-output
+          # EAS build output handling
+          echo "Build completed"
+
+      - name: Send to Telegram
+        if: success()
+        run: |
+          APK_PATH=$(find . -name "*.apk" -type f | head -1)
+          if [ -z "$APK_PATH" ]; then
+            echo "APK not found, skipping upload"
+            exit 0
+          fi
+          
+          CHAT_ID="${{ secrets.TELEGRAM_CHAT_ID }}"
+          BOT_TOKEN="${{ secrets.TELEGRAM_BOT_TOKEN }}"
+          
+          curl -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendDocument" \
+            -F "chat_id=${CHAT_ID}" \
+            -F "document=@${APK_PATH}" \
+            -F "caption=✅ APK Build Success"
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          CHAT_ID="${{ secrets.TELEGRAM_CHAT_ID }}"
+          BOT_TOKEN="${{ secrets.TELEGRAM_BOT_TOKEN }}"
+          
+          curl -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"chat_id\": \"${CHAT_ID}\",
+              \"text\": \"❌ APK Build Failed\"
+            }"
