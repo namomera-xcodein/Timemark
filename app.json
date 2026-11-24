@@ -15,21 +15,13 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.xcodein.timestampdoc",
-      "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#0f172a",
         "foregroundImage": "./assets/android/icon-foreground.png",
         "backgroundImage": "./assets/android/icon-background.png",
         "monochromeImage": "./assets/android/icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false,
-      "permissions": [
-        "android.permission.CAMERA",
-        "android.permission.RECORD_AUDIO",
-        "android.permission.ACCESS_COARSE_LOCATION",
-        "android.permission.ACCESS_FINE_LOCATION"
-      ]
+      "package": "com.xcodein.timestampdoc"
     },
     "plugins": [
       [
@@ -49,7 +41,6 @@
       "eas": {
         "projectId": "2a8dee63-b99c-4118-9f3c-fe1118b01117"
       }
-    },
-    "owner": "xcodeins-team"
+    }
   }
 }

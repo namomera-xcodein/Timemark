@@ -18,7 +18,7 @@ export default function App() {
           headerTitleStyle: { fontWeight: 'bold' },
         }}
       >
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Timestamp Documentation Camera' }} />
+        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Timestamp Camera' }} />
         <Stack.Screen name="PhotoMode" component={PhotoModeScreen} options={{ title: 'Photo Mode' }} />
         <Stack.Screen name="PhotoStudio" component={PhotoStudioScreen} options={{ title: 'Photo Studio' }} />
       </Stack.Navigator>
